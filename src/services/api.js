@@ -5,7 +5,6 @@ const api = axios.create({
   timeout: 10000,
 });
 
-// Automatically attach token to every request
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("access_token");

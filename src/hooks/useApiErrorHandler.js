@@ -1,31 +1,20 @@
 import { useToast } from "@chakra-ui/react";
 import { useAuth } from "../hooks/useAuth";
 
-/**
- * Custom hook to handle API errors consistently across the app.
- *
- * Usage:
- *   const handleApiError = useApiErrorHandler();
- *   try {
- *     const res = await apiCall();
- *   } catch (error) {
- *     handleApiError(error);
- *   }
- */
 export const useApiErrorHandler = () => {
   const toast = useToast();
   const { logout } = useAuth();
 
   const handleApiError = (error, customMessage = null) => {
-    // Default error message
+  
     let title = "Something went wrong";
     let description = "An unexpected error occurred. Please try again.";
 
-    // If the backend returns a structured response
+   
     if (error.response) {
       const { status, data } = error.response;
 
-      // Handle authentication issues
+  
       if (status === 401) {
         title = "Session expired";
         description = "Please log in again.";
@@ -47,7 +36,7 @@ export const useApiErrorHandler = () => {
         description = data.detail;
       }
     } else if (error.request) {
-      // Network or CORS error
+      
       title = "Network error";
       description =
         "Unable to reach the server. Please check your internet connection.";
@@ -55,10 +44,9 @@ export const useApiErrorHandler = () => {
       description = error.message;
     }
 
-    // Use custom override message if provided
+    
     if (customMessage) description = customMessage;
 
-    // Display toast message
     toast({
       title,
       description,
@@ -68,10 +56,8 @@ export const useApiErrorHandler = () => {
       position: "top",
     });
 
-    // Log for debugging (optional)
     console.error("API Error:", error);
 
-    // Return false so you can handle conditional flow in the caller
     return false;
   };
 

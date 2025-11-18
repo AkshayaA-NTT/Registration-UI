@@ -1,7 +1,6 @@
 import { Flex, Spinner, Text, VStack } from "@chakra-ui/react";
 
 const Loader = ({ message = "Loading..." }) => {
-  // Static colors (light mode only)
   const spinnerColor = "blue.500";
   const textColor = "gray.600";
   const bgColor = "gray.50";

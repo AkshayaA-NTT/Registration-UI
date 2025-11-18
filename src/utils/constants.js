@@ -32,16 +32,10 @@ export const INDUSTRY_TYPES = [
   "Technology",
 ];
 
-// --------------------
-// API Config
-// --------------------
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
-// --------------------
-// Miscellaneous
-// --------------------
 
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const DATETIME_FORMAT = "YYYY-MM-DD HH:mm:ss";

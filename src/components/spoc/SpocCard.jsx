@@ -11,14 +11,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-/**
- * SpocCard Component
- *
- * Props:
- * - spoc: { spoc_id, name, email, expertise, specialization }
- * - onViewAvailability: function(spoc) => void
- * - isSelected: boolean (optional)
- */
 export default function SpocCard({ spoc, onViewAvailability, isSelected = false }) {
   const toast = useToast();
 

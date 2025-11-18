@@ -1,10 +1,9 @@
 import { Flex, Circle, Text, Divider, useColorModeValue } from "@chakra-ui/react";
 
 export default function StepperHeader({ activeStep = 1 }) {
-  // Define step labels
+
   const steps = ["Deal Creation", "SPOC Selection", "Confirmation"];
 
-  // Colors
   const activeColor = useColorModeValue("blue.500", "blue.300");
   const inactiveColor = useColorModeValue("gray.300", "gray.600");
   const textActive = useColorModeValue("gray.800", "white");
@@ -57,7 +56,7 @@ export default function StepperHeader({ activeStep = 1 }) {
               </Text>
             </Flex>
 
-            {/* Divider between steps */}
+            
             {index < steps.length - 1 && (
               <Divider
                 flex="1"

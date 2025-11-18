@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { FiChevronDown } from "react-icons/fi";
-import { useAuth } from "../../context/AuthContext"; // ✅ corrected import path
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -45,7 +45,7 @@ const Navbar = () => {
   zIndex={1000}
 >
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        {/* ---------- LEFT SECTION: LOGO ---------- */}
+        
         <HStack spacing={8} alignItems="center">
           <HStack
             spacing={3}
@@ -55,7 +55,7 @@ const Navbar = () => {
             transition="opacity 0.2s"
           >
             <Image
-              src="/NTT_logo.png" // ✅ keep this in /public for Vite
+              src="/NTT_logo.png" 
               alt="NTT Data Logo"
               height="40px"
               objectFit="contain"
@@ -67,7 +67,7 @@ const Navbar = () => {
           </HStack>
         </HStack>
 
-        {/* ---------- RIGHT SECTION: USER MENU ---------- */}
+        
         <Flex alignItems="center">
           <Menu>
             <MenuButton

@@ -12,12 +12,12 @@ export default function Footer() {
         px={{ base: 4, md: 8 }}
         direction={{ base: "column", md: "row" }}
       >
-        {/* Left side text */}
+        
         <Text fontSize="sm" color="gray.600" textAlign="center">
           © {new Date().getFullYear()} Deal Registration Platform · All rights reserved
         </Text>
 
-        {/* Right side icons */}
+        
         <Flex gap={4} mt={{ base: 3, md: 0 }}>
           <Link
             href="https://linkedin.com"

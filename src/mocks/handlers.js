@@ -13,7 +13,7 @@ let fakeClients = [];
 let fakeBookings = [];
 
 export const handlers = [
-  // 🧩 Login Endpoint
+  // Login Endpoint
   http.post("http://localhost:8000/api/v1/auth/login", async ({ request }) => {
     const formData = await request.formData();
     const username = formData.get("username");
@@ -25,12 +25,12 @@ export const handlers = [
     return HttpResponse.json({ detail: "Invalid credentials" }, { status: 401 });
   }),
 
-  // 🧩 Get current user
+  // Get current user
   http.get("http://localhost:8000/api/v1/auth/me", () =>
     HttpResponse.json(fakeUser)
   ),
 
-  // 🧩 Create client (deal)
+  // Create client (deal)
   http.post("http://localhost:8000/api/v1/clients", async ({ request }) => {
     const data = await request.json();
     const newClient = { id: fakeClients.length + 1, ...data };
@@ -38,7 +38,7 @@ export const handlers = [
     return HttpResponse.json(newClient, { status: 201 });
   }),
 
-  // 🧩 Get list of SPOCs
+  // Get list of SPOCs
   http.get("http://localhost:8000/api/v1/spocs", () =>
     HttpResponse.json([
       { id: 1, name: "Riya Sharma", expertise: "Cloud", available: true },
@@ -47,7 +47,7 @@ export const handlers = [
     ])
   ),
 
-  // 🧩 Get SPOC availability
+  // Get SPOC availability
   http.get("http://localhost:8000/api/v1/spocs/:spocId/availability", () =>
     HttpResponse.json([
       {
@@ -63,7 +63,7 @@ export const handlers = [
     ])
   ),
 
-  // 🧩 Create booking
+  // Create booking
   http.post("http://localhost:8000/api/v1/bookings", async ({ request }) => {
     const booking = await request.json();
     const newBooking = {
@@ -75,7 +75,7 @@ export const handlers = [
     return HttpResponse.json(newBooking, { status: 201 });
   }),
 
-  // 🧩 Get booking details
+  // Get booking details
   http.get("http://localhost:8000/api/v1/bookings/:id", ({ params }) => {
     const booking = fakeBookings.find((b) => b.booking_id === Number(params.id));
     if (booking) return HttpResponse.json(booking);

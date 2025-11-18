@@ -91,7 +91,6 @@ export default function DealForm() {
 
   return (
     <PageWrapper>
-      {/* Ensures header + content align properly */}
       <Box maxW="900px" mx="auto" w="100%">
         <StepperHeader activeStep={1} />
 

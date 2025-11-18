@@ -2,9 +2,6 @@ import { createContext, useContext, useState } from "react";
 
 export const DealContext = createContext();
 
-/**
- * Hook for using deal context anywhere in the app
- */
 export const useDeal = () => {
   const context = useContext(DealContext);
   if (!context) {
@@ -13,13 +10,6 @@ export const useDeal = () => {
   return context;
 };
 
-/**
- * DealProvider — manages deal-related data across all pages:
- * - client info (from DealForm)
- * - selected SPOC
- * - selected slot
- * - booking info (from Confirmation)
- */
 export const DealProvider = ({ children }) => {
   const [clientId, setClientId] = useState(null);
   const [clientData, setClientData] = useState({});
@@ -28,9 +18,7 @@ export const DealProvider = ({ children }) => {
   const [bookingId, setBookingId] = useState(null);
   const [bookingLink, setBookingLink] = useState(null);
 
-  /**
-   * Reset all deal-related data (useful after confirmation or logout)
-   */
+
   const clearDealContext = () => {
     setClientId(null);
     setClientData({});

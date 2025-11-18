@@ -1,8 +1,6 @@
 import api from "./api";
 
 /**
- * Get list of SPOCs
- * Endpoint: GET /api/v1/spocs
  * @param {Object} params - { solution_type }
  */
 export const getSpocs = async (params = {}) => {
@@ -11,8 +9,6 @@ export const getSpocs = async (params = {}) => {
 };
 
 /**
- * Get availability of a specific SPOC
- * Endpoint: GET /api/v1/spocs/{spoc_id}/availability
  * @param {string} spocId 
  * @param {Object} params - { start_date, end_date }
  */

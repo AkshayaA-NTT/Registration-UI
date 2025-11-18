@@ -1,9 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
-  // ----------------------------
-  // Global Brand Colors
-  // ----------------------------
+ 
   colors: {
     brand: {
       50: "#e3f2fd",
@@ -12,24 +10,18 @@ const theme = extendTheme({
       300: "#64b5f6",
       400: "#42a5f5",
       500: "#2196f3",
-      600: "#1976d2", // ✅ corrected from invalid #1578cfff
+      600: "#1976d2", 
       700: "#1565c0",
       800: "#0d47a1",
       900: "#0b3c91",
     },
   },
 
-  // ----------------------------
-  // Color Mode Configuration
-  // ----------------------------
   config: {
     initialColorMode: "light",
     useSystemColorMode: false,
   },
 
-  // ----------------------------
-  // Global Styles
-  // ----------------------------
   styles: {
     global: {
       body: {
@@ -46,11 +38,8 @@ const theme = extendTheme({
     },
   },
 
-  // ----------------------------
-  // Component Customizations
-  // ----------------------------
+
   components: {
-    // ✅ BUTTON
     Button: {
       baseStyle: {
         borderRadius: "xl",
@@ -95,7 +84,6 @@ const theme = extendTheme({
       },
     },
 
-    // ✅ STAT
     Stat: {
       baseStyle: {
         container: {
@@ -136,7 +124,6 @@ const theme = extendTheme({
       },
     },
 
-    // ✅ TABLE
     Table: {
       sizes: {
         sm: { th: { px: 2, py: 1 }, td: { px: 2, py: 1 } },
@@ -168,7 +155,6 @@ const theme = extendTheme({
       },
     },
 
-    // ✅ SELECT
     Select: {
       sizes: {
         sm: { field: { fontSize: "sm", h: 8, px: 2 } },
@@ -213,7 +199,6 @@ const theme = extendTheme({
       },
     },
 
-    // ✅ MENU
     Menu: {
       baseStyle: {
         list: {

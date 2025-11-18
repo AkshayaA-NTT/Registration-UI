@@ -17,9 +17,9 @@ export const loginUser = async (username, password) => {
   return response.data;
 };
 
-/**
- * Get current logged-in user (optional, if backend supports /me)
- */
+
+// Get current logged-in user
+
 export const getCurrentUser = async () => {
   const response = await api.get("/api/v1/auth/me");
   return response.data;

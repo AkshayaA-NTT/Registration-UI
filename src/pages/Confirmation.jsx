@@ -37,7 +37,7 @@ export default function Confirmation() {
   const toast = useToast();
   const { hasCopied, onCopy } = useClipboard(bookingLink || "");
 
-  // ✅ Fetch booking details from backend
+  //Fetch booking details from backend
   useEffect(() => {
     const fetchBooking = async () => {
       if (!bookingId) {
@@ -49,7 +49,7 @@ export default function Confirmation() {
         setBookingDetails(res.data);
         if (res.data.meeting_link) setBookingLink(res.data.meeting_link);
       } catch (err) {
-        console.error("❌ Failed to fetch booking details:", err);
+        console.error("Failed to fetch booking details:", err);
         toast({
           title: "Failed to load booking details",
           status: "error",

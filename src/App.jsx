@@ -16,7 +16,6 @@ function App() {
           <DealProvider>
             <Box minH="100vh" w="100%" bg="gray.50" display="flex" flexDirection="column">
               <Navbar />
-              {/* This will now fill the remaining space */}
               <Box flex="1">
                 <AppRoutes />
               </Box>

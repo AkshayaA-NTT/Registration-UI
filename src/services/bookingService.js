@@ -10,19 +10,12 @@ export const createBooking = async (payload) => {
   return response;
 };
 
-/**
- * Get booking details
- * Endpoint: GET /api/v1/bookings/{booking_id}
- */
 export const getBookingDetails = async (bookingId) => {
   const response = await api.get(`/api/v1/bookings/${bookingId}`);
   return response;
 };
 
-/**
- * Cancel booking
- * Endpoint: POST /api/v1/bookings/{booking_id}/cancel
- */
+
 export const cancelBooking = async (bookingId) => {
   const response = await api.post(`/api/v1/bookings/${bookingId}/cancel`);
   return response;

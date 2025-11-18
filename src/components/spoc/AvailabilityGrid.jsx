@@ -11,14 +11,6 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-/**
- * AvailabilityGrid component
- * Displays a grid of available time slots for a selected SPOC.
- *
- * Props:
- * - slots: Array of { slot_id, start_time, end_time }
- * - onSelectSlot: Function(slot) -> void
- */
 export default function AvailabilityGrid({ slots = [], onSelectSlot }) {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const toast = useToast();

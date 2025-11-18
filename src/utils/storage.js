@@ -1,7 +1,4 @@
-// Generic helpers for localStorage
-
 /**
- * Save data to localStorage as JSON
  * @param {string} key 
  * @param {*} value 
  */
@@ -14,7 +11,6 @@ export const setStorage = (key, value) => {
 };
 
 /**
- * Retrieve and parse JSON data from localStorage
  * @param {string} key
  */
 export const getStorage = (key) => {
@@ -28,7 +24,6 @@ export const getStorage = (key) => {
 };
 
 /**
- * Remove an item from localStorage
  * @param {string} key
  */
 export const removeStorage = (key) => {
@@ -39,9 +34,6 @@ export const removeStorage = (key) => {
   }
 };
 
-/**
- * Clear all localStorage keys (useful on logout)
- */
 export const clearStorage = () => {
   try {
     localStorage.clear();
