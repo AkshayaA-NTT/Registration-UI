@@ -3,9 +3,9 @@ import { http, HttpResponse } from "msw";
 // Simulated in-memory data
 let fakeUser = {
   id: 1,
-  first_name: "Akshaya",
-  last_name: "A",
-  email: "akshayaa@demo.com",
+  first_name: "Admin",
+  last_name: "1",
+  email: "admin@demo.com",
   roles: [{ name: "USER" }],
 };
 
@@ -14,24 +14,24 @@ let fakeBookings = [];
 
 export const handlers = [
   // Login Endpoint
-  http.post("http://localhost:8000/api/v1/auth/login", async ({ request }) => {
+  http.post("/api/v1/auth/login", async ({ request }) => {
     const formData = await request.formData();
     const username = formData.get("username");
     const password = formData.get("password");
 
-    if (username === "demo" && password === "demo") {
+    if (username === "admin" && password === "admin123") {
       return HttpResponse.json({ access_token: "mock-token", token_type: "bearer" });
     }
     return HttpResponse.json({ detail: "Invalid credentials" }, { status: 401 });
   }),
 
   // Get current user
-  http.get("http://localhost:8000/api/v1/auth/me", () =>
+  http.get("/api/v1/auth/me", () =>
     HttpResponse.json(fakeUser)
   ),
 
   // Create client (deal)
-  http.post("http://localhost:8000/api/v1/clients", async ({ request }) => {
+  http.post("/api/v1/clients", async ({ request }) => {
     const data = await request.json();
     const newClient = { id: fakeClients.length + 1, ...data };
     fakeClients.push(newClient);
@@ -39,7 +39,7 @@ export const handlers = [
   }),
 
   // Get list of SPOCs
-  http.get("http://localhost:8000/api/v1/spocs", () =>
+  http.get("/api/v1/spocs", () =>
     HttpResponse.json([
       { id: 1, name: "Riya Sharma", expertise: "Cloud", available: true },
       { id: 2, name: "Arjun Patel", expertise: "AI", available: false },
@@ -48,7 +48,7 @@ export const handlers = [
   ),
 
   // Get SPOC availability
-  http.get("http://localhost:8000/api/v1/spocs/:spocId/availability", () =>
+  http.get("/api/v1/spocs/:spocId/availability", () =>
     HttpResponse.json([
       {
         id: 101,
@@ -64,7 +64,7 @@ export const handlers = [
   ),
 
   // Create booking
-  http.post("http://localhost:8000/api/v1/bookings", async ({ request }) => {
+  http.post("/api/v1/bookings", async ({ request }) => {
     const booking = await request.json();
     const newBooking = {
       booking_id: fakeBookings.length + 1,
@@ -76,7 +76,7 @@ export const handlers = [
   }),
 
   // Get booking details
-  http.get("http://localhost:8000/api/v1/bookings/:id", ({ params }) => {
+  http.get("/api/v1/bookings/:id", ({ params }) => {
     const booking = fakeBookings.find((b) => b.booking_id === Number(params.id));
     if (booking) return HttpResponse.json(booking);
     return HttpResponse.json({ detail: "Booking not found" }, { status: 404 });

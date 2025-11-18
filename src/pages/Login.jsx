@@ -30,7 +30,7 @@ export default function Login() {
   const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "deal-form";
 
   const handleChange = (e) =>
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -116,7 +116,7 @@ export default function Login() {
             </VStack>
           </form>
 
-          <HStack justifyContent="center" mt={6}>
+          {/* <HStack justifyContent="center" mt={6}>
             <Text fontSize="sm" color="gray.600">
               Don’t have an account?
             </Text>
@@ -129,7 +129,7 @@ export default function Login() {
             >
               Register
             </Link>
-          </HStack>
+          </HStack> */}
 
           <Text textAlign="center" fontSize="sm" mt={6} color="gray.500">
             © {new Date().getFullYear()} Deal Registration Platform

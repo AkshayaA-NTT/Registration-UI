@@ -30,20 +30,14 @@ export default function StepperHeader({ activeStep = 1 }) {
             {/* Step circle */}
             <Flex direction="column" align="center">
               <Circle
-                size="36px"
-                bg={
-                  isCompleted
-                    ? activeColor
-                    : isActive
-                    ? `${activeColor}50`
-                    : inactiveColor
-                }
-                color={isCompleted || isActive ? "white" : "gray.700"}
-                border={isActive ? `2px solid ${activeColor}` : "2px solid transparent"}
-                transition="all 0.3s ease"
-              >
-                {isCompleted ? "✓" : stepNumber}
-              </Circle>
+  size="36px"
+  bg={isActive ? activeColor : isCompleted ? activeColor : inactiveColor}
+  color="white"
+  border={isActive ? `3px solid ${activeColor}` : "2px solid transparent"}
+  transition="all 0.3s ease"
+>
+  {isCompleted ? "✓" : stepNumber}
+</Circle>
 
               <Text
                 mt={2}
