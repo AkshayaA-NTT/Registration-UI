@@ -32,35 +32,36 @@ export default function RegisterPage() {
   };
 
   const handleRegister = async () => {
-    if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Passwords do not match",
-        status: "error",
-        duration: 3000,
-      });
-      return;
-    }
+  if (formData.password !== formData.confirmPassword) {
+    toast({
+      title: "Passwords do not match",
+      status: "error",
+      duration: 3000,
+    });
+    return;
+  }
 
-    try {
-      // Replace with your backend API call
-      // await axios.post("/register", formData);
+  try {
+    const response = await axios.post("http://localhost:5000/register", formData); //need backend api for this
 
-      toast({
-        title: "Registration successful!",
-        description: "You can now log in.",
-        status: "success",
-        duration: 3000,
-      });
+    toast({
+      title: "Registration successful!",
+      description: "You can now log in.",
+      status: "success",
+      duration: 3000,
+    });
 
-      navigate("/Login");
-    } catch (error) {
-      toast({
-        title: "Registration failed",
-        status: "error",
-        duration: 3000,
-      });
-    }
-  };
+    navigate("/Login");
+  } catch (error) {
+    toast({
+      title: "Registration failed",
+      description: error.response?.data?.message || "Something went wrong.",
+      status: "error",
+      duration: 3000,
+    });
+  }
+};
+
 
   return (
     <Flex height="100vh" width="100vw">
