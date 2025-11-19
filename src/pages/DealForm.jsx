@@ -21,7 +21,7 @@ import PageWrapper from "../components/layout/PageWrapper";
 
 const SolutionTypes = [
   "Cloud Infrastructure",
-  " Security Solutions",
+  "Security Solutions",
   "Data Analytics",
   "Automation",
   "Custom Solutions",
@@ -67,7 +67,10 @@ export default function DealForm() {
     try {
       const res = await createClient(form);
       setClientId(res.data.client_id);
-      setClientData(form);
+      setClientData({
+        ...form,
+        solution_type: form.solution_type.trim().toLowerCase(),  // remove spaces
+        });
 
       toast({
         title: "Deal created successfully!",
