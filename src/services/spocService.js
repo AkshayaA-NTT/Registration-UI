@@ -1,20 +1,16 @@
 import api from "./api";
 
 /**
- * @param {Object} params - { solution_type }
+ * Get SPOCs filtered by solution_type.
+ * Accepts an object: { solution_type: "cloud infrastructure" }
  */
 export const getSpocs = async (params = {}) => {
-  const response = await api.get("/api/v1/spocs", { params });
-  return response;
+  return await api.get("/api/v1/spocs", { params });
 };
 
 /**
- * @param {string} spocId 
- * @param {Object} params - { start_date, end_date }
+ * Fetch availability for a specific SPOC.
  */
-export const getSpocAvailability = async (spocId, params) => {
-  const response = await api.get(`/api/v1/spocs/${spocId}/availability`, {
-    params,
-  });
-  return response;
+export const getSpocAvailability = async (spocId, params = {}) => {
+  return await api.get(`/api/v1/spocs/${spocId}/availability`, { params });
 };
