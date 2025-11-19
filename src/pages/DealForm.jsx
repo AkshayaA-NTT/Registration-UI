@@ -49,7 +49,6 @@ export default function DealForm() {
     contact_email: "",
     industry: "",
     solution_type: "",
-    expertise: "",
     deal_type: "",
     deal_stage: "",
   });
@@ -90,7 +89,7 @@ export default function DealForm() {
   };
 
   return (
-    <PageWrapper>
+    // <PageWrapper>
       <Box maxW="900px" mx="auto" w="100%">
         <StepperHeader activeStep={1} />
 
@@ -165,7 +164,7 @@ export default function DealForm() {
                     value={form.deal_type}
                   >
                     <option value="">Select Deal type</option>
-                    {SolutionTypes.map((d)=>(
+                    {DealTypes.map((d)=>(
                       <option key={d} value = {d}>{d}</option>
                     ))}
                   </Select>
@@ -179,20 +178,10 @@ export default function DealForm() {
                     value={form.deal_stage}
                   >
                     <option value="">Select Deal Stage</option>
-                    {SolutionTypes.map((stage)=>(
+                    {DealStages.map((stage)=>(
                       <option key={stage} value = {stage}>{stage}</option>
                     ))}
                   </Select>
-                </FormControl>
-
-                <FormControl>
-                  <FormLabel>Expertise</FormLabel>
-                  <Input
-                    name="expertise"
-                    placeholder="E.g. Machine Learning"
-                    onChange={handleChange}
-                    value={form.expertise}
-                  />
                 </FormControl>
 
                 <Button type="submit" colorScheme="blue" w="full" mt={4}>
@@ -203,6 +192,6 @@ export default function DealForm() {
           </CardBody>
         </Card>
       </Box>
-    </PageWrapper>
+    // </PageWrapper>
   );
 }

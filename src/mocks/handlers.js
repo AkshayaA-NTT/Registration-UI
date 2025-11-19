@@ -31,7 +31,7 @@ export const handlers = [
   ),
 
   // Create client (deal)
-  http.post("/api/v1/clients", async ({ request }) => {
+  http.post("http://localhost:8000/api/v1/clients", async ({ request }) => {
     const data = await request.json();
     const newClient = { id: fakeClients.length + 1, ...data };
     fakeClients.push(newClient);
@@ -39,13 +39,37 @@ export const handlers = [
   }),
 
   // Get list of SPOCs
-  http.get("/api/v1/spocs", () =>
-    HttpResponse.json([
-      { id: 1, name: "Riya Sharma", expertise: "Cloud", available: true },
-      { id: 2, name: "Arjun Patel", expertise: "AI", available: false },
-      { id: 3, name: "Sanya Mehta", expertise: "Data Analytics", available: true },
-    ])
-  ),
+  http.get("http://localhost:8000/api/v1/spocs", async ({ request }) => {
+  const url = new URL(request.url);
+  const solutionType = url.searchParams.get("solution_type")?.toLowerCase();
+
+  // Pretend these come from backend
+  const spocs = [
+    { id: 1, name: "Riya Sharma", expertise: "cloud" },
+    { id: 2, name: "Arjun Patel", expertise: "security" },
+    { id: 3, name: "Sanya Mehta", expertise: "data" },
+    { id: 4, name: "Mehul Jain", expertise: "automation" },
+    { id: 5, name: "Nisha Rao", expertise: "general" }, // for custom solutions
+  ];
+
+  // Map solution type → skill needed
+  const mapSolutionToSkill = {
+    "cloud infrastructure": "cloud",
+    "security solutions": "security",
+    "data analytics": "data",
+    "automation": "automation",
+    "custom solutions": "general",
+  };
+
+  const requiredSkill = mapSolutionToSkill[solutionType];
+
+  const filtered = spocs.filter(
+    (s) => !requiredSkill || s.expertise === requiredSkill || s.expertise === "general"
+  );
+
+  return HttpResponse.json(filtered);
+}),
+
 
   // Get SPOC availability
   http.get("/api/v1/spocs/:spocId/availability", () =>
