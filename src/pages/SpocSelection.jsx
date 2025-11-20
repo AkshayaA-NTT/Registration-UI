@@ -79,10 +79,7 @@ export default function SpocSelection() {
     setSelectedSlot(null);
 
     try {
-      const res = await getSpocAvailability(spoc.spoc_id, {
-        start_date: "2025-11-12",
-        end_date: "2025-11-14",
-      });
+      const res = await getSpocAvailability(spoc.spoc_id);
 
       setSlots(res.data?.available_slots || []);
     } catch (err) {
