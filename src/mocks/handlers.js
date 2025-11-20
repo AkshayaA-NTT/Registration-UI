@@ -83,8 +83,8 @@ const MOCK_SPOCS = [
   {
     spoc_id: 4,
     name: "Sanya Mishra",
-    expertise: "Cloud Infrastructure",
-    specialization: "Enterprise Cloud Solutions & Migration",
+    expertise: "Automation",
+    specialization: "Robotic Process Automation & AI Integration",
     email: "sanya.mishra@company.com",
     phone: "+91-9876543210",
   },
@@ -99,8 +99,8 @@ const MOCK_SPOCS = [
   {
     spoc_id: 6,
     name: "Vaibhav Pandey",
-    expertise: "Data Analytics",
-    specialization: "Predictive Analytics & Business Intelligence",
+    expertise: "General",
+    specialization: "Custom Solutions & Consulting",
     email: "vaibhav.pandey@company.com",
     phone: "+91-9876543212",
   },
@@ -178,7 +178,7 @@ export const handlers = [
       "Security Solutions": "Security Solutions",
       "Data Analytics": "Data Analytics",
       "Automation": "Automation",
-      "Custom Solutions": "General",           
+      "custom solutions": "general",           
     };
 
     const mappedType = map[solutionType] || solutionType;
