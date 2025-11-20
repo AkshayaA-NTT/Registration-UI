@@ -3,6 +3,7 @@ import { http, HttpResponse } from "msw";
 // ===============================
 // SIMULATED DATA
 // ===============================
+
 let fakeUser = {
   id: 1,
   first_name: "Admin",
@@ -14,13 +15,80 @@ let fakeUser = {
 let fakeClients = [];
 let fakeBookings = [];
 
+// Auto-generate availability slots for 3 SPOCs × 3 slots each
+function generateMockSlots() {
+  const spocIds = [1, 2, 3];
+  const slots = [];
+  let slotId = 1;
+
+  for (const spocId of spocIds) {
+    const now = Date.now();
+    slots.push({
+      slot_id: slotId++,
+      spoc_id: spocId,
+      start_time: new Date(now + 1 * 3600000).toISOString(),
+      end_time: new Date(now + 2 * 3600000).toISOString(),
+      is_booked: false,
+    });
+    slots.push({
+      slot_id: slotId++,
+      spoc_id: spocId,
+      start_time: new Date(now + 3 * 3600000).toISOString(),
+      end_time: new Date(now + 4 * 3600000).toISOString(),
+      is_booked: false,
+    });
+    slots.push({
+      slot_id: slotId++,
+      spoc_id: spocId,
+      start_time: new Date(now + 5 * 3600000).toISOString(),
+      end_time: new Date(now + 6 * 3600000).toISOString(),
+      is_booked: false,
+    });
+  }
+
+  return slots;
+}
+
+let fakeAvailability = generateMockSlots();
+
+// ===============================
+// MOCK SPOCs (MATCH BACKEND EXACTLY)
+// ===============================
+
+const MOCK_SPOCS = [
+  {
+    spoc_id: 1,
+    name: "Rajesh Sharma",
+    expertise: "Cloud Infrastructure",
+    specialization: "Enterprise Cloud Solutions & Migration",
+    email: "rajesh.sharma@company.com",
+    phone: "+91-9876543210",
+  },
+  {
+    spoc_id: 2,
+    name: "Priya Desai",
+    expertise: "Security Solutions",
+    specialization: "Regulatory & Data Protection",
+    email: "priya.desai@company.com",
+    phone: "+91-9876543211",
+  },
+  {
+    spoc_id: 3,
+    name: "Amit Patel",
+    expertise: "Data Analytics",
+    specialization: "Predictive Analytics & Business Intelligence",
+    email: "amit.patel@company.com",
+    phone: "+91-9876543212",
+  },
+];
+
 // ===============================
 // HANDLERS
 // ===============================
-export const handlers = [
 
+export const handlers = [
   // -------------------------------------------------------
-  // LOGIN ENDPOINT
+  // LOGIN
   // -------------------------------------------------------
   http.post("/api/v1/auth/login", async ({ request }) => {
     const formData = await request.formData();
@@ -41,20 +109,21 @@ export const handlers = [
   }),
 
   // -------------------------------------------------------
-  // GET CURRENT USER
+  // ME (user profile)
   // -------------------------------------------------------
   http.get("/api/v1/auth/me", () => {
     return HttpResponse.json(fakeUser);
   }),
 
   // -------------------------------------------------------
-  // CREATE CLIENT / DEAL
+  // CREATE CLIENT
   // -------------------------------------------------------
   http.post("/api/v1/clients", async ({ request }) => {
     const data = await request.json();
     const newClient = {
-      client_id: fakeClients.length + 1,
+      client_id: String(fakeClients.length + 1),
       ...data,
+      created_at: new Date().toISOString(),
     };
     fakeClients.push(newClient);
 
@@ -62,74 +131,83 @@ export const handlers = [
   }),
 
   // -------------------------------------------------------
-  // GET SPOCS (FILTER BY solution_type)
+  // GET SPOCS (MATCHES BACKEND FILTER)
   // -------------------------------------------------------
   http.get("/api/v1/spocs", async ({ request }) => {
     const url = new URL(request.url);
     const solutionType = url.searchParams.get("solution_type")?.toLowerCase();
 
-    // Fake SPOC data
-    const spocs = [
-      { spoc_id: 1, name: "Riya Sharma", expertise: "cloud" },
-      { spoc_id: 2, name: "Arjun Patel", expertise: "security" },
-      { spoc_id: 3, name: "Sanya Mehta", expertise: "data" },
-      { spoc_id: 4, name: "Mehul Jain", expertise: "automation" },
-      { spoc_id: 5, name: "Nisha Rao", expertise: "general" },
-    ];
+    let filtered = [...MOCK_SPOCS];
 
-    // Mapping solution_type → expertise required
-    const mapSolutionToSkill = {
-      "cloud infrastructure": "cloud",
-      "security solutions": "security",
-      "data analytics": "data",
-      "automation": "automation",
-      "custom solutions": "general",
-    };
+    if (solutionType) {
+      filtered = filtered.filter((s) =>
+        s.expertise.toLowerCase().includes(solutionType)
+      );
+    }
 
-    const requiredSkill = mapSolutionToSkill[solutionType];
-
-    const filtered = spocs.filter(
-      (s) =>
-        !requiredSkill ||
-        s.expertise === requiredSkill ||
-        s.expertise === "general"
-    );
+    if (filtered.length === 0) {
+      return HttpResponse.json(
+        { detail: "No SPOCs found matching criteria" },
+        { status: 404 }
+      );
+    }
 
     return HttpResponse.json(filtered);
   }),
 
-  http.get('/spoc-selection', ({ request }) => {
-  // passthrough to let the browser handle navigation/static file
-  return HttpResponse.passthrough?.() ?? new Response(null, { status: 204 });
-}),
   // -------------------------------------------------------
-  // GET SPOC AVAILABILITY
+  // SPOC AVAILABILITY (MATCHES BACKEND RESPONSE MODEL)
   // -------------------------------------------------------
-  http.get("/api/v1/spocs/:spocId/availability", () => {
-    return HttpResponse.json([
-      {
-        slot_id: 101,
-        start_time: new Date(Date.now() + 1 * 60 * 60 * 1000).toISOString(),
-        end_time: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
-      },
-      {
-        slot_id: 102,
-        start_time: new Date(Date.now() + 3 * 60 * 60 * 1000).toISOString(),
-        end_time: new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(),
-      },
-    ]);
+  http.get("/api/v1/spocs/:spocId/availability", ({ params }) => {
+    const spocId = Number(params.spocId);
+
+    const spoc = MOCK_SPOCS.find((s) => s.spoc_id === spocId);
+    if (!spoc) {
+      return HttpResponse.json({ detail: "SPOC not found" }, { status: 404 });
+    }
+
+    const availableSlots = fakeAvailability.filter(
+      (s) => s.spoc_id === spocId && !s.is_booked
+    );
+
+    return HttpResponse.json({
+      spoc_id: spoc.spoc_id,
+      name: spoc.name,
+      expertise: spoc.expertise,
+      specialization: spoc.specialization,
+      email: spoc.email,
+      available_slots: availableSlots, // IMPORTANT – matches backend
+    });
   }),
 
   // -------------------------------------------------------
-  // CREATE BOOKING
+  // CREATE BOOKING (MATCH BACKEND EXACTLY)
   // -------------------------------------------------------
   http.post("/api/v1/bookings", async ({ request }) => {
     const data = await request.json();
 
+    const slot = fakeAvailability.find(
+      (s) => s.slot_id === data.slot_id && !s.is_booked
+    );
+    if (!slot) {
+      return HttpResponse.json(
+        { detail: "Slot not available or does not exist" },
+        { status: 400 }
+      );
+    }
+
+    slot.is_booked = true;
+
+    const spoc = MOCK_SPOCS.find((s) => s.spoc_id === data.spoc_id);
+
+    const bookingId = String(fakeBookings.length + 1);
+
     const newBooking = {
-      booking_id: fakeBookings.length + 1,
-      meeting_link: "https://meet.demo.com/12345",
-      ...data,
+      booking_id: bookingId,
+      message: "Booking created successfully",
+      spoc_name: spoc.name,
+      meeting_link: `https://meet.demo.com/${bookingId}`,
+      start_time: slot.start_time,
     };
 
     fakeBookings.push(newBooking);
@@ -141,15 +219,10 @@ export const handlers = [
   // GET BOOKING DETAILS
   // -------------------------------------------------------
   http.get("/api/v1/bookings/:id", ({ params }) => {
-    const booking = fakeBookings.find(
-      (b) => b.booking_id === Number(params.id)
-    );
+    const booking = fakeBookings.find((b) => b.booking_id === params.id);
 
     if (!booking) {
-      return HttpResponse.json(
-        { detail: "Booking not found" },
-        { status: 404 }
-      );
+      return HttpResponse.json({ detail: "Booking not found" }, { status: 404 });
     }
 
     return HttpResponse.json(booking);
