@@ -158,11 +158,11 @@ export default function Confirmation() {
         </CardBody>
       </Card>
 
-      <VStack spacing={4} mt={8}>
-        <Button colorScheme="blue" onClick={clearDealContext}>
+      {/* <VStack spacing={4} mt={8}>
+        <Button colorScheme="blue" onClick={() => navigate("/deal-form")}>
           Register New Deal
         </Button>
-      </VStack>
+      </VStack> */}
       </PageWrapper>
   );
 

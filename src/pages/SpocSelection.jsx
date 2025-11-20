@@ -41,11 +41,7 @@ export default function SpocSelection() {
 
   // MOCK MODE 
   const mockMode = true; 
-  // Mock SPOCs
-  // const mockSpocs = [ 
-  //   { spoc_id: 1, name: "John Doe", // role: "Technical SPOC", // email: "john@example.com", // }, // { // spoc_id: 2, // name: "Sarah Johnson", // role: "Business SPOC", // email: "sarah@example.com", // }, // { // spoc_id: 3, // name: "Michael Smith", // role: "Senior SPOC", // email: "michael@example.com", // }, // ]; // // Mock Slots // const mockSlots = [ // { slot_id: 101, time: "10:00 AM", status: "available" }, // { slot_id: 102, time: "11:30 AM", status: "available" }, // { slot_id: 103, time: "02:00 PM", status: "available" }, // ]; //
-
-
+ 
   // FETCH SPOCs FILTERED BY SOLUTION TYPE
 
   useEffect(() => {
@@ -83,12 +79,9 @@ export default function SpocSelection() {
     setSelectedSlot(null);
 
     try {
-      const res = await getSpocAvailability(spoc.spoc_id, {
-        start_date: "2025-11-12",
-        end_date: "2025-11-14",
-      });
+      const res = await getSpocAvailability(spoc.spoc_id);
 
-      setSlots(res.data?.slots || []);
+      setSlots(res.data?.available_slots || []);
     } catch (err) {
       toast({
         title: "Error loading availability",
@@ -99,9 +92,8 @@ export default function SpocSelection() {
     }
   };
 
-  // ===================================================
-  // 🚀 CONFIRM BOOKING
-  // ===================================================
+  // CONFIRM BOOKING
+  
   const handleConfirmBooking = async () => {
     if (!clientId || !selectedSpoc || !selectedSlot) {
       toast({
