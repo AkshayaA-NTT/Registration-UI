@@ -17,7 +17,7 @@ let fakeBookings = [];
 
 // Auto-generate availability slots for 3 SPOCs × 3 slots each
 function generateMockSlots() {
-  const spocIds = [1, 2, 3];
+  const spocIds = [1, 2, 3, 4, 5, 6, 7, 8];
   const slots = [];
   let slotId = 1;
 
@@ -80,16 +80,52 @@ const MOCK_SPOCS = [
     email: "amit.patel@company.com",
     phone: "+91-9876543212",
   },
+  {
+    spoc_id: 4,
+    name: "Sanya Mishra",
+    expertise: "Cloud Infrastructure",
+    specialization: "Enterprise Cloud Solutions & Migration",
+    email: "sanya.mishra@company.com",
+    phone: "+91-9876543210",
+  },
+  {
+    spoc_id: 5,
+    name: "Anil Kumar",
+    expertise: "Security Solutions",
+    specialization: "Regulatory & Data Protection",
+    email: "anil.kumar@company.com",
+    phone: "+91-9876543211",
+  },
+  {
+    spoc_id: 6,
+    name: "Vaibhav Pandey",
+    expertise: "Data Analytics",
+    specialization: "Predictive Analytics & Business Intelligence",
+    email: "vaibhav.pandey@company.com",
+    phone: "+91-9876543212",
+  },
+  {
+    spoc_id: 7,
+    name: "Rajesh Sharma",
+    expertise: "Cloud Infrastructure",
+    specialization: "Enterprise Cloud Solutions & Migration",
+    email: "rajesh.sharma@company.com",
+    phone: "+91-9876543210",
+  },
+  {
+    spoc_id: 8,
+    name: "Ayshman Singh",
+    expertise: "Security Solutions",
+    specialization: "Regulatory & Data Protection",
+    email: "ayushman.singh@company.com",
+    phone: "+91-9876543211",
+  },
 ];
 
-// ===============================
 // HANDLERS
-// ===============================
 
 export const handlers = [
-  // -------------------------------------------------------
   // LOGIN
-  // -------------------------------------------------------
   http.post("/api/v1/auth/login", async ({ request }) => {
     const formData = await request.formData();
     const username = formData.get("username");
@@ -108,16 +144,14 @@ export const handlers = [
     );
   }),
 
-  // -------------------------------------------------------
   // ME (user profile)
-  // -------------------------------------------------------
+  
   http.get("/api/v1/auth/me", () => {
     return HttpResponse.json(fakeUser);
   }),
 
-  // -------------------------------------------------------
   // CREATE CLIENT
-  // -------------------------------------------------------
+
   http.post("/api/v1/clients", async ({ request }) => {
     const data = await request.json();
     const newClient = {
@@ -130,34 +164,41 @@ export const handlers = [
     return HttpResponse.json(newClient, { status: 201 });
   }),
 
-  // -------------------------------------------------------
-  // GET SPOCS (MATCHES BACKEND FILTER)
-  // -------------------------------------------------------
+  // GET SPOCS 
+
   http.get("/api/v1/spocs", async ({ request }) => {
-    const url = new URL(request.url);
-    const solutionType = url.searchParams.get("solution_type")?.toLowerCase();
+  const url = new URL(request.url);
+  const solutionType = url.searchParams.get("solution_type")?.toLowerCase();
 
-    let filtered = [...MOCK_SPOCS];
+  let filtered = [...MOCK_SPOCS];
 
-    if (solutionType) {
-      filtered = filtered.filter((s) =>
-        s.expertise.toLowerCase().includes(solutionType)
-      );
-    }
+  if (solutionType) {
+    const map = {
+      "Cloud Infrastructure": "Cloud Infrastructure",
+      "Security Solutions": "Security Solutions",
+      "Data Analytics": "Data Analytics",
+      "Automation": "Automation",
+      "Custom Solutions": "General",           
+    };
 
-    if (filtered.length === 0) {
-      return HttpResponse.json(
-        { detail: "No SPOCs found matching criteria" },
-        { status: 404 }
-      );
-    }
+    const mappedType = map[solutionType] || solutionType;
 
-    return HttpResponse.json(filtered);
-  }),
+    filtered = filtered.filter((s) =>
+      s.expertise.toLowerCase().includes(mappedType)
+    );
+  }
 
-  // -------------------------------------------------------
+  if (filtered.length === 0) {
+    return HttpResponse.json(
+      { detail: "No SPOCs found matching criteria" },
+      { status: 404 }
+    );
+  }
+
+  return HttpResponse.json(filtered);
+}),
+
   // SPOC AVAILABILITY (MATCHES BACKEND RESPONSE MODEL)
-  // -------------------------------------------------------
   http.get("/api/v1/spocs/:spocId/availability", ({ params }) => {
     const spocId = Number(params.spocId);
 
@@ -176,13 +217,13 @@ export const handlers = [
       expertise: spoc.expertise,
       specialization: spoc.specialization,
       email: spoc.email,
-      available_slots: availableSlots, // IMPORTANT – matches backend
+      available_slots: availableSlots,
     });
   }),
 
-  // -------------------------------------------------------
+
   // CREATE BOOKING (MATCH BACKEND EXACTLY)
-  // -------------------------------------------------------
+ 
   http.post("/api/v1/bookings", async ({ request }) => {
     const data = await request.json();
 
@@ -215,9 +256,8 @@ export const handlers = [
     return HttpResponse.json(newBooking, { status: 201 });
   }),
 
-  // -------------------------------------------------------
   // GET BOOKING DETAILS
-  // -------------------------------------------------------
+  
   http.get("/api/v1/bookings/:id", ({ params }) => {
     const booking = fakeBookings.find((b) => b.booking_id === params.id);
 
