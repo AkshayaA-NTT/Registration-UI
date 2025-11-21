@@ -27,7 +27,7 @@ export default function StepperHeader({ activeStep = 1 }) {
           const isCompleted = activeStep > stepNumber;
 
           return (
-            <Flex key={label} align="center" flex="1">
+            <Flex key={label} align="center" flex={index === steps.length - 1 ? "0" : "1"}>
               
               {/* Step + Label */}
               <Flex direction="column" align="center">
