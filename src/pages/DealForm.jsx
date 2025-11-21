@@ -124,7 +124,7 @@ export default function DealForm() {
                   />
                 </FormControl>
 
-                <FormControl isRequired>
+                <FormControl>
                   <FormLabel>Email</FormLabel>
                   <Input
                     name="contact_email"
