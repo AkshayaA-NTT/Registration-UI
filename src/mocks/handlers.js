@@ -67,7 +67,7 @@ const MOCK_SPOCS = [
   },
   {
     spoc_id: 7,
-    name: "Rajesh Sharma",
+    name: "Abhinav Rathod",
     expertise: "Cloud Infrastructure",
     specialization: "Enterprise Cloud Solutions & Migration",
     email: "rajesh.sharma@company.com",
