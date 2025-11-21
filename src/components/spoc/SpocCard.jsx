@@ -66,6 +66,7 @@ export default function SpocCard({ spoc, onViewAvailability, isSelected = false 
         </HStack>
         <Button
           size="sm"
+          fontSize="xs"
           colorScheme="blue"
           variant={isSelected ? "solid" : "outline"}
           onClick={handleViewAvailability}

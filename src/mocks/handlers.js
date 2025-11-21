@@ -63,15 +63,15 @@ const MOCK_SPOCS = [
     expertise: "General",
     specialization: "Custom Solutions & Consulting",
     email: "vaibhav.pandey@company.com",
-    phone: "+91-9876543212",
+    phone: "+91-9876547212",
   },
   {
     spoc_id: 7,
-    name: "Rajesh Sharma",
+    name: "Abhinav Rathod",
     expertise: "Cloud Infrastructure",
     specialization: "Enterprise Cloud Solutions & Migration",
-    email: "rajesh.sharma@company.com",
-    phone: "+91-9876543210",
+    email: "abhinav.rathod@company.com",
+    phone: "+91-9874543210",
   },
   {
     spoc_id: 8,
@@ -79,7 +79,7 @@ const MOCK_SPOCS = [
     expertise: "Security Solutions",
     specialization: "Regulatory & Data Protection",
     email: "ayushman.singh@company.com",
-    phone: "+91-9876543211",
+    phone: "+91-9876543111",
   },
 ];
 
