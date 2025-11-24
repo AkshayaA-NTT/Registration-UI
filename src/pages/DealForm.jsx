@@ -27,7 +27,7 @@ const SolutionTypes = [
   "Custom Solutions",
 ];
 
-const DealTypes = ['High Budget', 'Mid range', 'Low Budget', 'Tobe Decided'];
+const DealTypes = ['High Budget', 'Mid range', 'Low Budget', 'To be Decided'];
 
 const DealStages = ['Lead', 'POC Stage', 'Discovery', 'Closign stage', 'Others'];
 
